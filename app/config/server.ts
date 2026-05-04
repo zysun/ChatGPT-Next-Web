@@ -96,6 +96,10 @@ declare global {
       OPENROUTER_URL?: string;
       OPENROUTER_API_KEY?: string;
 
+      // mimo only
+      MIMO_URL?: string;
+      MIMO_API_KEY?: string;
+
       // custom template for preprocessing user input
       DEFAULT_INPUT_TEMPLATE?: string;
 
@@ -262,6 +266,10 @@ export const getServerSideConfig = () => {
     isOpenRouter: !!process.env.OPENROUTER_API_KEY,
     openrouterUrl: process.env.OPENROUTER_URL,
     openrouterApiKey: getApiKey(process.env.OPENROUTER_API_KEY),
+
+    isMiMo: !!process.env.MIMO_API_KEY,
+    mimoUrl: process.env.MIMO_URL,
+    mimoApiKey: getApiKey(process.env.MIMO_API_KEY),
 
     gtmId: process.env.GTM_ID,
     gaId: process.env.GA_ID || DEFAULT_GA_ID,

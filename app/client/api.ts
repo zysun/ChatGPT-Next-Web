@@ -26,6 +26,7 @@ import { ChatGLMApi } from "./platforms/glm";
 import { SiliconflowApi } from "./platforms/siliconflow";
 import { Ai302Api } from "./platforms/ai302";
 import { OpenRouterApi } from "./platforms/openrouter";
+import { MiMoApi } from "./platforms/mimo";
 
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
@@ -181,6 +182,9 @@ export class ClientApi {
       case ModelProvider.OpenRouter:
         this.llm = new OpenRouterApi();
         break;
+      case ModelProvider.MiMo:
+        this.llm = new MiMoApi();
+        break;
       default:
         this.llm = new ChatGPTApi();
     }
@@ -276,6 +280,7 @@ export function getHeaders(ignoreHeaders: boolean = false) {
     const isAI302 = modelConfig.providerName === ServiceProvider["302.AI"];
     const isOpenRouter =
       modelConfig.providerName === ServiceProvider.OpenRouter;
+    const isMiMo = modelConfig.providerName === ServiceProvider.MiMo;
     const isEnabledAccessControl = accessStore.enabledAccessControl();
     const apiKey = isGoogle
       ? accessStore.googleApiKey
@@ -305,6 +310,8 @@ export function getHeaders(ignoreHeaders: boolean = false) {
       ? accessStore.ai302ApiKey
       : isOpenRouter
       ? accessStore.openrouterApiKey
+      : isMiMo
+      ? accessStore.mimoApiKey
       : accessStore.openaiApiKey;
     return {
       isGoogle,
@@ -321,13 +328,14 @@ export function getHeaders(ignoreHeaders: boolean = false) {
       isSiliconFlow,
       isAI302,
       isOpenRouter,
+      isMiMo,
       apiKey,
       isEnabledAccessControl,
     };
   }
 
   function getAuthHeader(): string {
-    return isAzure
+    return isAzure || isMiMo
       ? "api-key"
       : isAnthropic
       ? "x-api-key"
@@ -351,6 +359,7 @@ export function getHeaders(ignoreHeaders: boolean = false) {
     isSiliconFlow,
     isAI302,
     isOpenRouter,
+    isMiMo,
     apiKey,
     isEnabledAccessControl,
   } = getConfig();
@@ -361,7 +370,7 @@ export function getHeaders(ignoreHeaders: boolean = false) {
 
   const bearerToken = getBearerToken(
     apiKey,
-    isAzure || isAnthropic || isGoogle,
+    isAzure || isAnthropic || isGoogle || isMiMo,
   );
 
   if (bearerToken) {
@@ -405,6 +414,8 @@ export function getClientApi(provider: ServiceProvider): ClientApi {
       return new ClientApi(ModelProvider["302.AI"]);
     case ServiceProvider.OpenRouter:
       return new ClientApi(ModelProvider.OpenRouter);
+    case ServiceProvider.MiMo:
+      return new ClientApi(ModelProvider.MiMo);
     default:
       return new ClientApi(ModelProvider.GPT);
   }

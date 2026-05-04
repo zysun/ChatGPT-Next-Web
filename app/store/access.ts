@@ -19,6 +19,7 @@ import {
   SILICONFLOW_BASE_URL,
   AI302_BASE_URL,
   OPENROUTER_BASE_URL,
+  MIMO_BASE_URL,
 } from "../constant";
 import { getHeaders } from "../client/api";
 import { getClientConfig } from "../config/client";
@@ -66,6 +67,8 @@ const DEFAULT_AI302_URL = isApp ? AI302_BASE_URL : ApiPath["302.AI"];
 const DEFAULT_OPENROUTER_URL = isApp
   ? OPENROUTER_BASE_URL
   : ApiPath.OpenRouter;
+
+const DEFAULT_MIMO_URL = isApp ? MIMO_BASE_URL : ApiPath.MiMo;
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
@@ -147,6 +150,10 @@ const DEFAULT_ACCESS_STATE = {
   // openrouter
   openrouterUrl: DEFAULT_OPENROUTER_URL,
   openrouterApiKey: "",
+
+  // mimo
+  mimoUrl: DEFAULT_MIMO_URL,
+  mimoApiKey: "",
 
   // server config
   needCode: true,
@@ -238,6 +245,9 @@ export const useAccessStore = createPersistStore(
     isValidOpenRouter() {
       return ensure(get(), ["openrouterApiKey"]);
     },
+    isValidMiMo() {
+      return ensure(get(), ["mimoApiKey"]);
+    },
 
     isAuthorized() {
       this.fetch();
@@ -259,6 +269,7 @@ export const useAccessStore = createPersistStore(
         this.isValidChatGLM() ||
         this.isValidSiliconFlow() ||
         this.isValidOpenRouter() ||
+        this.isValidMiMo() ||
         !this.enabledAccessControl() ||
         (this.enabledAccessControl() && ensure(get(), ["accessCode"]))
       );

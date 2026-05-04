@@ -40,6 +40,8 @@ export const AI302_BASE_URL = "https://api.302.ai";
 
 export const OPENROUTER_BASE_URL = "https://openrouter.ai/api";
 
+export const MIMO_BASE_URL = "https://api.xiaomimimo.com";
+
 export const CACHE_URL_PREFIX = "/api/cache";
 export const UPLOAD_URL = `${CACHE_URL_PREFIX}/upload`;
 
@@ -78,6 +80,7 @@ export enum ApiPath {
   SiliconFlow = "/api/siliconflow",
   "302.AI" = "/api/302ai",
   OpenRouter = "/api/openrouter",
+  MiMo = "/api/mimo",
 }
 
 export enum SlotID {
@@ -138,6 +141,7 @@ export enum ServiceProvider {
   SiliconFlow = "SiliconFlow",
   "302.AI" = "302.AI",
   OpenRouter = "OpenRouter",
+  MiMo = "MiMo",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
@@ -166,6 +170,7 @@ export enum ModelProvider {
   SiliconFlow = "SiliconFlow",
   "302.AI" = "302.AI",
   OpenRouter = "OpenRouter",
+  MiMo = "MiMo",
 }
 
 export const Stability = {
@@ -285,6 +290,11 @@ export const AI302 = {
 
 export const OpenRouter = {
   ExampleEndpoint: OPENROUTER_BASE_URL,
+  ChatPath: "v1/chat/completions",
+};
+
+export const MiMo = {
+  ExampleEndpoint: MIMO_BASE_URL,
   ChatPath: "v1/chat/completions",
 };
 
@@ -660,7 +670,7 @@ const iflytekModels = [
   "4.0Ultra",
 ];
 
-const deepseekModels = ["deepseek-chat", "deepseek-coder", "deepseek-reasoner"];
+const deepseekModels = ["deepseek-chat", "deepseek-coder", "deepseek-reasoner", "deepseek-v4-flash", "	deepseek-v4-pro"];
 
 const xAIModes = [
   "grok-beta",
@@ -765,6 +775,14 @@ const openrouterModels = [
   "qwen/qwen3.6-plus",
   "minimax/minimax-m2.7",
   "minimax/minimax-m2.5:free",
+];
+
+const mimoModels = [
+  "mimo-v2.5-pro",
+  "mimo-v2.5-flash",
+  "mimo-v2-pro",
+  "mimo-v2-flash",
+  "mimo-v2-omni",
 ];
 
 let seq = 1000; // 内置的模型序号生成器从1000开始
@@ -943,6 +961,17 @@ export const DEFAULT_MODELS = [
       providerName: "OpenRouter",
       providerType: "openrouter",
       sorted: 16,
+    },
+  })),
+  ...mimoModels.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "mimo",
+      providerName: "MiMo",
+      providerType: "mimo",
+      sorted: 17,
     },
   })),
 ] as const;

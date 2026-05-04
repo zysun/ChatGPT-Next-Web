@@ -17,6 +17,7 @@ import { handle as chatglmHandler } from "../../glm";
 import { handle as proxyHandler } from "../../proxy";
 import { handle as ai302Handler } from "../../302ai";
 import { handle as openrouterHandler } from "../../openrouter";
+import { handle as mimoHandler } from "../../mimo";
 
 async function handle(
   req: NextRequest,
@@ -58,6 +59,8 @@ async function handle(
       return ai302Handler(req, { params });
     case ApiPath.OpenRouter:
       return openrouterHandler(req, { params });
+    case ApiPath.MiMo:
+      return mimoHandler(req, { params });
     default:
       return proxyHandler(req, { params });
   }

@@ -104,6 +104,9 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
       case ModelProvider.OpenRouter:
         systemApiKey = serverConfig.openrouterApiKey;
         break;
+      case ModelProvider.MiMo:
+        systemApiKey = serverConfig.mimoApiKey;
+        break;
       case ModelProvider.SiliconFlow:
         systemApiKey = serverConfig.siliconFlowApiKey;
         break;

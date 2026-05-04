@@ -77,6 +77,7 @@ import {
   SiliconFlow,
   AI302,
   OpenRouter,
+  MiMo,
 } from "../constant";
 import { Prompt, SearchService, usePromptStore } from "../store/prompt";
 import { ErrorBoundary } from "./error";
@@ -1541,6 +1542,47 @@ export function Settings() {
     </>
   );
 
+  const mimoConfigComponent = accessStore.provider ===
+    ServiceProvider.MiMo && (
+    <>
+      <ListItem
+        title={Locale.Settings.Access.MiMo.Endpoint.Title}
+        subTitle={
+          Locale.Settings.Access.MiMo.Endpoint.SubTitle +
+          MiMo.ExampleEndpoint
+        }
+      >
+        <input
+          aria-label={Locale.Settings.Access.MiMo.Endpoint.Title}
+          type="text"
+          value={accessStore.mimoUrl}
+          placeholder={MiMo.ExampleEndpoint}
+          onChange={(e) =>
+            accessStore.update(
+              (access) => (access.mimoUrl = e.currentTarget.value),
+            )
+          }
+        ></input>
+      </ListItem>
+      <ListItem
+        title={Locale.Settings.Access.MiMo.ApiKey.Title}
+        subTitle={Locale.Settings.Access.MiMo.ApiKey.SubTitle}
+      >
+        <PasswordInput
+          aria-label={Locale.Settings.Access.MiMo.ApiKey.Title}
+          value={accessStore.mimoApiKey}
+          type="text"
+          placeholder={Locale.Settings.Access.MiMo.ApiKey.Placeholder}
+          onChange={(e) => {
+            accessStore.update(
+              (access) => (access.mimoApiKey = e.currentTarget.value),
+            );
+          }}
+        />
+      </ListItem>
+    </>
+  );
+
   return (
     <ErrorBoundary>
       <div className="window-header" data-tauri-drag-region>
@@ -1907,6 +1949,7 @@ export function Settings() {
                   {siliconflowConfigComponent}
                   {ai302ConfigComponent}
                   {openrouterConfigComponent}
+                  {mimoConfigComponent}
                 </>
               )}
             </>
