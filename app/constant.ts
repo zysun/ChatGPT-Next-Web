@@ -38,6 +38,8 @@ export const SILICONFLOW_BASE_URL = "https://api.siliconflow.cn";
 
 export const AI302_BASE_URL = "https://api.302.ai";
 
+export const OPENROUTER_BASE_URL = "https://openrouter.ai/api";
+
 export const CACHE_URL_PREFIX = "/api/cache";
 export const UPLOAD_URL = `${CACHE_URL_PREFIX}/upload`;
 
@@ -75,6 +77,7 @@ export enum ApiPath {
   DeepSeek = "/api/deepseek",
   SiliconFlow = "/api/siliconflow",
   "302.AI" = "/api/302ai",
+  OpenRouter = "/api/openrouter",
 }
 
 export enum SlotID {
@@ -134,6 +137,7 @@ export enum ServiceProvider {
   DeepSeek = "DeepSeek",
   SiliconFlow = "SiliconFlow",
   "302.AI" = "302.AI",
+  OpenRouter = "OpenRouter",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
@@ -161,6 +165,7 @@ export enum ModelProvider {
   DeepSeek = "DeepSeek",
   SiliconFlow = "SiliconFlow",
   "302.AI" = "302.AI",
+  OpenRouter = "OpenRouter",
 }
 
 export const Stability = {
@@ -276,6 +281,11 @@ export const AI302 = {
   ChatPath: "v1/chat/completions",
   EmbeddingsPath: "jina/v1/embeddings",
   ListModelPath: "v1/models?llm=1",
+};
+
+export const OpenRouter = {
+  ExampleEndpoint: OPENROUTER_BASE_URL,
+  ChatPath: "v1/chat/completions",
 };
 
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
@@ -746,6 +756,8 @@ const ai302Models = [
 const openrouterModels = [
   // Requires user to customize models
   "openrouter/auto",
+  "xiaomi/mimo-v2.5-pro",
+  "xiaomi/mimo-v2.5-flash",
   "xiaomi/mimo-v2-pro",
   "xiaomi/mimo-v2-flash",
   "xiaomi/mimo-v2-omni",
@@ -920,6 +932,17 @@ export const DEFAULT_MODELS = [
       providerName: "302.AI",
       providerType: "ai302",
       sorted: 15,
+    },
+  })),
+  ...openrouterModels.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "openrouter",
+      providerName: "OpenRouter",
+      providerType: "openrouter",
+      sorted: 16,
     },
   })),
 ] as const;

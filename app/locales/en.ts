@@ -554,6 +554,17 @@ const en: LocaleType = {
           SubTitle: "Example: ",
         },
       },
+      OpenRouter: {
+        ApiKey: {
+          Title: "OpenRouter API Key",
+          SubTitle: "Use a custom OpenRouter API Key",
+          Placeholder: "OpenRouter API Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
     },
 
     Model: "Model",

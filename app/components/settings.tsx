@@ -76,6 +76,7 @@ import {
   DeepSeek,
   SiliconFlow,
   AI302,
+  OpenRouter,
 } from "../constant";
 import { Prompt, SearchService, usePromptStore } from "../store/prompt";
 import { ErrorBoundary } from "./error";
@@ -1499,6 +1500,47 @@ export function Settings() {
       </>
   );
 
+  const openrouterConfigComponent = accessStore.provider ===
+    ServiceProvider.OpenRouter && (
+    <>
+      <ListItem
+        title={Locale.Settings.Access.OpenRouter.Endpoint.Title}
+        subTitle={
+          Locale.Settings.Access.OpenRouter.Endpoint.SubTitle +
+          OpenRouter.ExampleEndpoint
+        }
+      >
+        <input
+          aria-label={Locale.Settings.Access.OpenRouter.Endpoint.Title}
+          type="text"
+          value={accessStore.openrouterUrl}
+          placeholder={OpenRouter.ExampleEndpoint}
+          onChange={(e) =>
+            accessStore.update(
+              (access) => (access.openrouterUrl = e.currentTarget.value),
+            )
+          }
+        ></input>
+      </ListItem>
+      <ListItem
+        title={Locale.Settings.Access.OpenRouter.ApiKey.Title}
+        subTitle={Locale.Settings.Access.OpenRouter.ApiKey.SubTitle}
+      >
+        <PasswordInput
+          aria-label={Locale.Settings.Access.OpenRouter.ApiKey.Title}
+          value={accessStore.openrouterApiKey}
+          type="text"
+          placeholder={Locale.Settings.Access.OpenRouter.ApiKey.Placeholder}
+          onChange={(e) => {
+            accessStore.update(
+              (access) => (access.openrouterApiKey = e.currentTarget.value),
+            );
+          }}
+        />
+      </ListItem>
+    </>
+  );
+
   return (
     <ErrorBoundary>
       <div className="window-header" data-tauri-drag-region>
@@ -1864,6 +1906,7 @@ export function Settings() {
                   {chatglmConfigComponent}
                   {siliconflowConfigComponent}
                   {ai302ConfigComponent}
+                  {openrouterConfigComponent}
                 </>
               )}
             </>

@@ -101,6 +101,9 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
       case ModelProvider.ChatGLM:
         systemApiKey = serverConfig.chatglmApiKey;
         break;
+      case ModelProvider.OpenRouter:
+        systemApiKey = serverConfig.openrouterApiKey;
+        break;
       case ModelProvider.SiliconFlow:
         systemApiKey = serverConfig.siliconFlowApiKey;
         break;
