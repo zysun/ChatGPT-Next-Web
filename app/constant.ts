@@ -742,6 +742,19 @@ const ai302Models = [
   "gemini-2.5-pro",
 ];
 
+// Use this to generate a full model list -> https://gist.github.com/hyc1230/d4b271d161ffcda485f1fa1a27e08096
+const openrouterModels = [
+  // Requires user to customize models
+  "openrouter/auto",
+  "xiaomi/mimo-v2-pro",
+  "xiaomi/mimo-v2-flash",
+  "xiaomi/mimo-v2-omni",
+  "z-ai/glm-5.1",
+  "qwen/qwen3.6-plus",
+  "minimax/minimax-m2.7",
+  "minimax/minimax-m2.5:free",
+];
+
 let seq = 1000; // 内置的模型序号生成器从1000开始
 export const DEFAULT_MODELS = [
   ...openaiModels.map((name) => ({
